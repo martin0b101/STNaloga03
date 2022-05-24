@@ -1,0 +1,26 @@
+<div class="card">
+    <img src="https://i.pinimg.com/originals/69/a4/55/69a455bb4588ddf04d75754a87db5c65.jpg" alt="" class="card-img-top">
+    <div class="card-body">
+        <i class="fa-regular fa-heart fa-xl pb-3"></i>
+        <i class="fa-regular fa-comment fa-xl"></i>
+        <h5 class="card-title">Username</h5>
+        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        <p>Liked by 100</p>
+    </div>
+</div>
+
+
+<!--image card -->
+<div class="col-lg-4 mb-4 mb-lg-0">
+    <img
+    src="https://assets.system76.com/downloads/wallpapers/System76-Old_Man_Smoked_His_Pipe-by_Ian_Hex_of_LightSweep.jpg"
+    class="w-100 shadow-1-strong rounded mb-4"
+    alt="Waves at Sea"
+    />
+
+    <img
+    src="https://cdn.wallpapersafari.com/27/7/i8vmx1.jpg"
+    class="w-100 shadow-1-strong rounded mb-4"
+    alt="Yosemite National Park"
+    />
+</div>
