@@ -28,9 +28,16 @@
                 <input type="password" name="inputPassword" id="inputPassword" class="form-control" placeholder="Password" required="">
             </div>
             <div class="mx-auto">
+                <p>Don't have an account?</p>
+                <a href="<?= BASE_URL . "feed/signup"?>">Sign up</a>
+            </div>
+            <div class="mx-auto">
                 <button class="btn btn-dark btn-block">Sign in</button>
             </div>
         </form>
+        <?php if (!empty($errorMessage)):?>
+            <p class="text-danger"><?=$errorMessage?></p>
+        <?php endif;?>
     </div>
 </body>
 </html>

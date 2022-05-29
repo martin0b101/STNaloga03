@@ -14,7 +14,7 @@
 </head>
 <body class="bg-light">
     <div class="container col-8 col-md-6 col-lg-4 mt-5 pt-5">
-        <form class="form-signin" action="" method="post">
+        <form class="form-signin" action="<?= BASE_URL . "feed/signup" ?>" method="post">
             <div class="text-center mb-3">
                 <img src="https://cdn3.iconfinder.com/data/icons/glypho-social-and-other-logos/64/logo-share-512.png" alt="" width="72" height="72">
                 <h1>Welcome to Sharing</h1>
@@ -36,6 +36,9 @@
                 <button class="btn btn-dark btn-block">Sign up</button>
             </div>
         </form>
+        <?php if (!empty($errorMessage)):?>
+            <p class="text-danger"><?=$errorMessage?></p>
+        <?php endif;?>
     </div>
 </body>
 </html>

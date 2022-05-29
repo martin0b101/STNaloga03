@@ -37,7 +37,7 @@
                         <?php if (isset($user)): ?>
                             <a class="nav-link" href="<?= BASE_URL . "feed/profile/"?>"><?=$user?></a>
                         <?php endif; ?>
-                        <a class="nav-link" href="<?= BASE_URL . "feed/profile/"?>">Profile</a>
+                        
                         
                         
                     </li>
@@ -46,7 +46,14 @@
         </div>
     </nav>
     <div class="container p-2"></div>
-    <div class="container mt-5 p-4 bg-dark text-white text-center rounded"><?=$_SESSION["fullName"]["full_name"]?></div>
+    <div class="container mt-5 p-4 bg-dark text-white rounded">
+        <div class="row">
+        <div class="col-10 text-left">
+            <h5><?=$_SESSION["fullName"]["full_name"]?></h5>
+        </div>
+        <div class="col-2 "><button id="editPosts" type="button" class="btn btn-light"><i class="fa-solid fa-pen-to-square fa-xl"></i></button></div>
+        </div>
+    </div>
     <div class="container mt-2 p-4 bg-light">
     <!-- Gallery -->
     
@@ -58,13 +65,32 @@
                 class="w-100 shadow-1-strong rounded mb-4"
                 alt="<?=$post["description"]?>"
                 />
+                <form action="<?= BASE_URL . "feed/profile/delete" ?>" method="post">
+                    <button name="select-to-delete" id="deleteSelected" type="submit" value="<?=$post["post_id"]?>" class="btn btn-danger">Delete</button>
+                </form>
             </div>
             <?php endforeach; ?>
            
         </div>
+        
         <!-- Gallery -->
+        
     </div>
 
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $(".btn-danger").hide();
+            
+
+        $("#editPosts").click(function() {
+            $(".btn-danger").toggle();
+            
+        });
+        
+    });
+    </script>
+    
     
 </body>
 </html>

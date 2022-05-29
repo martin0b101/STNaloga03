@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,6 +14,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Font awesome -->
     <script src="https://kit.fontawesome.com/1944e29fed.js" crossorigin="anonymous"></script>
+    <!-- js
+    <script src="script-feed.js"></script> -->
 </head>
 <body>
     <nav class="navbar navbar-expand-sm navbar-dark bg-dark fixed-top">
@@ -22,13 +26,21 @@
             </button>
             <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="navbar-nav ms-auto">
-                    
+                <?php if ($_SESSION["userEmail"]):?>
                     <li class="nav-item">
-                        <a class="nav-link" href="<?= BASE_URL . "feed/add"?>">
-                            <!-- add post -->
-                            <i class="fa-solid fa-circle-plus fa-xl"></i>
-                        </a>
+                            <a class="nav-link" href="<?= BASE_URL . "feed/add"?>">
+                                <!-- add post -->
+                                <i class="fa-solid fa-circle-plus fa-xl"></i>
+                            </a>
+                        </li>
+                    <?php else:?>
+                        <li class="nav-item">
+                            <a class="nav-link disabled" href="<?= BASE_URL . "feed/add"?>">
+                                <!-- add post -->
+                                <i class="fa-solid fa-circle-plus fa-xl"></i>
+                            </a>
                     </li>
+                    <?php endif; ?>
 
                     <li class="nav-item">
                         <a class="nav-link" href="<?= BASE_URL . "feed"?>">
@@ -38,10 +50,18 @@
                     <li class="nav-item">
                         
                         <?php if (isset($_SESSION['userEmail'])): ?>
-                            <a class="nav-link" href="<?= BASE_URL . "feed/logout"?>">Log out <?=$_SESSION['userEmail']?></a>
-                            <a class="nav-link" href="<?= BASE_URL . "feed/profile"?>">Profile</a>
+                            <div class="btn-group">
+                                <a href="<?= BASE_URL . "feed/profile"?>" ><button type="button" class="btn btn-secondary">Profile</button></a>
+                                <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <span class="visually-hidden">Toggle Dropdown</span>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="<?= BASE_URL . "feed/logout"?>">Log out</a></li>
+                                </ul>
+                            </div>
+                            
                         <?php else: ?>
-                        <a class="nav-link" href="<?= BASE_URL . "feed/profile/"?>">Profile</a>
+                        <a class="nav-link" href="<?= BASE_URL . "feed/profile"?>">Profile</a>
                         <?php endif; ?>
                         
                     </li>
@@ -53,20 +73,74 @@
     <div class="container mt-5 p-4 bg-light">
     <!-- Gallery -->
     
-        <div class="row">
+        <div class="row" id="photoGrid">
             
             <?php foreach ($posts as $post):?>
-            <div class="col-lg-4 col-md-12 mb-4 mb-lg-0">
-                <img
-                src="<?="data:image/jpg;charset=utf8;base64," . base64_encode($post["media"])?>"
-                class="w-100 shadow-1-strong rounded mb-4"
-                alt="<?=$post["description"]?>"
-                />
+
+            <!--just image
+                
+            
+            card-->
+
+            <?php if (isset($_SESSION["userEmail"])) :?>
+            <div class="card m-3" style="width: 18rem;">
+                <img src="<?="data:image/jpg;charset=utf8;base64," . base64_encode($post["media"])?>" class="card-img-top" alt="<?=$post["description"]?>">
+                <div class="card-body">
+                    <h5 class="card-title"><?=$post["description"]?></h5>
+                </div>
+                <div class="card-footer">
+                    <form action="<?= BASE_URL . "like"?>" method="post">
+                    <button type="submit" name="post_id" value="<?=$post["post_id"];?>" class="btn btn-dark"><i class="fa-regular fa-heart fa-xl"></i></button> 
+                    </form>
+                    
+                    <button data-bs-container="body" data-bs-toggle="popover" data-bs-placement="bottom" type="submit" id="show-likes" value="<?=$post["post_id"]?>" class="btn btn-light mt-2">Show likes</button>
+                    
+                    <p class="likes"></p>
+                </div>
             </div>
+            <?php else:?>
+                <div class="card m-3" style="width: 18rem;">
+                <div class="card-header">Featured</div>
+                <img src="<?="data:image/jpg;charset=utf8;base64," . base64_encode($post["media"])?>" class="card-img-top" alt="<?=$post["description"]?>">
+                <div class="card-body">
+                    <h5 class="card-title"><?=$post["description"]?></h5>
+                </div>
+                
+            </div>
+            <?php endif;?>
+
             <?php endforeach; ?>
         </div>
         <!-- Gallery -->
     </div>
+
+
+
+
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script>
+
+
+$(document).ready(function(){
+    $(".btn-light").click(function(){
+        //console.log($(this).val());
+        let button = $(this);
+        let url = "<?=BASE_URL?>" + "api/show-likes?postId=" + $(this).val();
+        $.getJSON(url, function(data){
+            alert(data.likes);
+            
+        });
+    });
+            
+
+       
+        
+});
+
+
+</script>
+
 
 
 

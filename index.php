@@ -3,7 +3,6 @@
 session_start();
 
 require_once("controller/FeedController.php");
-require_once("controller/StoreController.php");
 
 
 
@@ -18,7 +17,7 @@ $urls = [
     "feed/signin" => function () {
         FeedController::signIn();
     },
-    "feed/register" => function () {
+    "feed/signup" => function () {
         FeedController::signUp();
     },
     "feed/profile" => function () {
@@ -36,6 +35,25 @@ $urls = [
     "feed/logout" => function () {
         FeedController::logout();
     },
+
+    "feed/profile/delete" => function () {
+        FeedController::deletePost();
+    },
+
+    "like" => function () {
+        FeedController::likePost();
+    },
+    "ajax/show-likes" => function () {
+        FeedController::ajaxShowLikes();
+    },
+    "api/show-likes" => function (){
+        FeedController::showLikes();
+    },
+
+    "ajax/likes" => function () {
+        FeedController::getLikes();
+    },
+    
     "" => function () {
         ViewHelper::redirect(BASE_URL . "feed");
     },
@@ -49,5 +67,5 @@ try {
     }
 } catch (Exception $e) {
     echo "An error occurred: <pre>$e</pre>";
-    // ViewHelper::error404();
+    ViewHelper::error404();
 } 
